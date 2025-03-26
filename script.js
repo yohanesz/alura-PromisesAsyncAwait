@@ -37,3 +37,74 @@ inputUpload.addEventListener('change', async (evento) => {
         }
     } 
 });
+
+const inputTags = document.getElementById('input-tags');
+const tagsList = document.getElementById("lista-tags");
+
+
+tagsList.addEventListener('click', (evento) => {
+    if(evento.target.classList.contains("remove-tag")) {
+        const tagSelected = evento.target.parentElement;
+        tagsList.removeChild(tagSelected);
+    }
+});
+
+const tagsDisponiveis = ["Front-end", "Programação", "Data Science", "Full-stack", "HTML", "CSS", "JavaScript"];
+
+async function verificaTagsDisponiveis(tagTexto) {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve(tagsDisponiveis.includes(tagTexto)); //percorre ate encontrar e retorna true
+        }, 1000);
+    });
+};
+
+inputTags.addEventListener('keypress', async (evento) => {
+    if(evento.key === "Enter") {
+        evento.preventDefault();
+        const tagContent = inputTags.value.trim();
+
+        if(tagContent !== "") {
+            try {
+
+                const tagExiste = await verificaTagsDisponiveis(tagContent);
+
+                if(tagExiste) {
+                    const newTag = document.createElement("li");
+                    newTag.innerHTML = `<p> ${tagContent} </p> <img src="/img/close-black.svg" class="remove-tag">`;
+                    console.log(tagContent)
+                    tagsList.appendChild(newTag);
+                    inputTags.value = "";
+                } else {
+                    alert("Tag não foi encontrada.")
+                }
+
+            } catch(error) {
+                console.log(error);
+                alert("Erro ao verificar a existência da tag");
+            }
+        }
+    }
+});
+
+const botaoPublicar = document.querySelector(".botao-publicar");
+
+botaoPublicar.addEventListener('click', async (evento) => {
+    evento.preventDefault();
+
+    const nomeProjeto = document.getElementById('nome').value;
+    const descricaoProjeto = document.getElementById('descricao').value;
+    const tagsProjeto = Array.from(listaTags.querySelectorAll("p")).map((tag) => tag.textContent);
+});
+
+async function publicarProjeto(nomeProjeto, descricaoProjeto, tagsProjeto) {
+
+    return new Promisse((resolve, reject) => {
+        setTimeout(() => {
+            const deuCerto = Math.random() > 0.5;
+        })
+    })
+}
+
+
+
